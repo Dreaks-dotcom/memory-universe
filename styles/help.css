@@ -1,0 +1,135 @@
+/* Bottom-right "?" button and the controls card it opens (src/ui/helpCard.js). */
+
+.help {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 8;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition:
+    opacity 520ms ease,
+    transform 520ms ease;
+}
+
+.help.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* The wrapper itself never catches clicks (its closed card still takes up space);
+   only the button and the open card do. */
+.help.is-visible .help__button,
+.help.is-visible .help__card.is-open {
+  pointer-events: auto;
+}
+
+.help__button {
+  width: 40px;
+  height: 40px;
+  color: var(--muted);
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition:
+    background 200ms ease,
+    color 200ms ease;
+}
+
+.help__button:hover,
+.help__button[aria-expanded="true"] {
+  color: var(--text);
+  background: var(--glass-fill-hover);
+}
+
+.help__button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.help__card {
+  width: 270px;
+  max-width: calc(100vw - 24px);
+  margin-bottom: 10px;
+  padding: 16px 18px 14px;
+  background: rgba(20, 20, 28, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transform-origin: bottom right;
+  visibility: hidden;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    visibility 220ms ease;
+}
+
+.help__card.is-open {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+}
+
+.help__card h2 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.help__list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 9px 14px;
+  align-items: center;
+  margin: 0;
+}
+
+.help__list dt {
+  justify-self: start;
+}
+
+.help__list dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.help__list kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .help {
+    right: 12px;
+    bottom: 16px;
+  }
+
+  .help__button {
+    width: 38px;
+    height: 38px;
+  }
+}

@@ -1,0 +1,50 @@
+/* Small tag in the bottom-left that names the planet under the pointer. */
+
+.zone-panel {
+  position: fixed;
+  left: 22px;
+  bottom: 20px;
+  z-index: 6;
+  width: min(300px, calc(100vw - 44px));
+  padding: 13px 15px 14px;
+  color: var(--text);
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease,
+    border-color 220ms ease;
+}
+
+.zone-panel.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zone-panel__eyebrow {
+  margin: 0 0 7px;
+  color: var(--quiet);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.zone-panel h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.2;
+}
+
+.zone-panel p:not(.zone-panel__eyebrow) {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}

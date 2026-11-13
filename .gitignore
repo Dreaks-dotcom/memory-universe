@@ -1,0 +1,9 @@
+# Kişisel evren (gerçek fotoğraflar, mesajlar, şarkılar) — asla yayınlanmaz
+my-universe/
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
+
+# Editör / araç ayarları
+.claude/

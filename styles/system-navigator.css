@@ -1,0 +1,220 @@
+/* Top-left "where am I" pill and its system menu (src/ui/systemNavigator.js). */
+
+.system-navigator {
+  position: fixed;
+  top: 20px;
+  left: 22px;
+  z-index: 8;
+  max-width: calc(50vw - 32px);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition:
+    opacity 520ms ease,
+    transform 520ms ease;
+}
+
+.system-navigator.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Only the pill and the open menu catch clicks, not the empty space around them. */
+.system-navigator.is-visible .system-navigator__current,
+.system-navigator.is-visible .system-navigator__menu.is-open {
+  pointer-events: auto;
+}
+
+.system-navigator__current {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  max-width: 100%;
+  height: 40px;
+  padding: 0 14px 0 16px;
+  color: var(--text);
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: background 200ms ease;
+}
+
+.system-navigator__current:hover {
+  background: var(--glass-fill-hover);
+}
+
+.system-navigator__current:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.system-navigator__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--system-color);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--system-color);
+  transition: background 400ms ease;
+}
+
+.system-navigator__name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.system-navigator__progress {
+  flex: none;
+  color: var(--quiet);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.system-navigator__chevron {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin: -3px 0 0 2px;
+  border-right: 1.5px solid var(--quiet);
+  border-bottom: 1.5px solid var(--quiet);
+  transform: rotate(45deg);
+  transition:
+    transform 220ms ease,
+    margin 220ms ease;
+}
+
+.system-navigator__current[aria-expanded="true"] .system-navigator__chevron {
+  margin-top: 3px;
+  transform: rotate(-135deg);
+}
+
+/* Menu */
+
+.system-navigator__menu {
+  width: 280px;
+  max-width: calc(100vw - 32px);
+  max-height: 0;
+  margin-top: 8px;
+  overflow: hidden;
+  background: rgba(20, 20, 28, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  opacity: 0;
+  transition:
+    max-height 320ms ease,
+    padding 320ms ease,
+    opacity 220ms ease;
+}
+
+.system-navigator__menu.is-open {
+  max-height: min(560px, calc(100vh - 100px));
+  padding: 6px;
+  overflow-y: auto;
+  opacity: 1;
+}
+
+.system-navigator__item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 9px 12px;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.86rem;
+  text-align: left;
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.system-navigator__item::before {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  content: "";
+  background: var(--item-color);
+  border-radius: 50%;
+}
+
+.system-navigator__item span:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.system-navigator__item:hover,
+.system-navigator__item.is-active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.system-navigator__item-detail {
+  flex: none;
+  color: var(--quiet);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.system-navigator__divider {
+  height: 1px;
+  margin: 5px 12px;
+  background: var(--line);
+}
+
+.system-navigator__reset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 6px 12px 8px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.system-navigator__reset > span {
+  flex-basis: 100%;
+}
+
+.system-navigator__text-button {
+  padding: 2px 0;
+  color: var(--quiet);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: color 160ms ease;
+}
+
+.system-navigator__text-button:hover,
+.system-navigator__text-button.is-emphasized {
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .system-navigator {
+    top: 12px;
+    left: 12px;
+    max-width: calc(100vw - 24px - 80px);
+  }
+
+  .system-navigator__current {
+    height: 38px;
+    font-size: 0.82rem;
+  }
+}

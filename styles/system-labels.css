@@ -1,0 +1,66 @@
+/* Name tags floating above each system (positioned by src/ui/systemLabels.js). */
+
+.system-labels {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 900ms ease;
+}
+
+.system-labels.is-visible {
+  opacity: 1;
+}
+
+.system-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 8px;
+  color: rgba(248, 243, 234, 0.72);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition:
+    color 200ms ease,
+    opacity 250ms ease;
+}
+
+.system-label::before {
+  width: 5px;
+  height: 5px;
+  content: "";
+  background: var(--system-color);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--system-color);
+}
+
+.system-label.is-interactive {
+  pointer-events: auto;
+}
+
+.system-label:hover {
+  color: var(--text);
+}
+
+.system-label:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (max-width: 640px) {
+  .system-label {
+    font-size: 0.7rem;
+  }
+}

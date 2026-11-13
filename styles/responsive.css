@@ -1,0 +1,144 @@
+@media (max-width: 640px) {
+  .zone-panel {
+    right: 14px;
+    bottom: 70px;
+    left: 14px;
+    width: auto;
+  }
+
+  .memory-modal {
+    padding: 18px;
+  }
+
+  .memory-modal__close {
+    top: 16px;
+    right: 16px;
+  }
+
+  .memory-modal__scene {
+    width: min(330px, calc(100vw - 36px), calc((100vh - 116px) * 0.75));
+  }
+
+  .memory-modal__scene.is-landscape {
+    width: min(520px, calc(100vw - 36px), calc((100vh - 116px) * 1.5));
+  }
+
+  .memory-modal__step {
+    width: 36px;
+    height: 36px;
+    font-size: 1.65rem;
+  }
+
+  .memory-modal__step--prev {
+    bottom: 18px;
+    left: 18px;
+  }
+
+  .memory-modal__step--next {
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .center-modal__close {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+@media (max-width: 640px) and (orientation: portrait) {
+  .zone-panel {
+    bottom: clamp(58px, 15vw, 72px);
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .zone-panel {
+    right: auto;
+    bottom: 8px;
+    left: 8px;
+    width: min(260px, calc(50vw - 14px));
+    padding: 9px 11px;
+  }
+
+  .zone-panel__eyebrow {
+    margin-bottom: 4px;
+    font-size: 0.56rem;
+  }
+
+  .zone-panel h2 {
+    font-size: 0.78rem;
+  }
+
+  .memory-modal {
+    padding: 12px;
+  }
+
+  .memory-modal__close {
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .memory-modal__scene {
+    width: min(280px, calc((100vh - 58px) * 0.75), calc(100vw - 130px));
+  }
+
+  .memory-modal__scene.is-landscape {
+    width: min(520px, calc((100vh - 58px) * 1.5), calc(100vw - 130px));
+  }
+
+  .memory-card__face {
+    padding: 10px;
+  }
+
+  .memory-card__back {
+    padding: 24px 22px;
+  }
+
+  .memory-card__back p {
+    font-size: clamp(1.1rem, 3vw, 1.35rem);
+    line-height: 1.5;
+  }
+
+  .memory-modal__step {
+    bottom: 12px;
+    width: 34px;
+    height: 34px;
+    font-size: 1.55rem;
+  }
+
+  .memory-modal__step--prev {
+    left: 12px;
+  }
+
+  .memory-modal__step--next {
+    right: 12px;
+  }
+
+  .center-message {
+    width: min(560px, calc(100vw - 70px));
+    padding: 24px;
+  }
+
+  .center-message h2 {
+    margin-bottom: 18px;
+    font-size: clamp(1.8rem, 6vw, 3rem);
+  }
+
+  .center-message p:last-child {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

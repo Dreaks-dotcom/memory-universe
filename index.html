@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#020205" />
+    <title>Memory Universe</title>
+    <meta name="description" content="A 3D photo-album gift that turns your memories into planets in a universe of your own." />
+
+    <!-- Link previews (WhatsApp, LinkedIn, X…). After publishing, replace the image
+         path with the full address of your site, e.g. https://you.github.io/repo/docs/share-preview.jpg -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Memory Universe" />
+    <meta property="og:description" content="Turn your photos into planets: a 3D album for someone you love." />
+    <meta property="og:image" content="docs/share-preview.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Security: the page may only load its own files. The sha256 value allows the
+         import map below; if you edit the import map, update this hash (see README). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-8XvUhfOyAQ0xrN2l4lAR1NWN2swizirH1cFFwd7NzCY='; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+
+    <link rel="stylesheet" href="./styles/fonts.css" />
+    <link rel="stylesheet" href="./styles/base.css" />
+    <link rel="stylesheet" href="./styles/intro.css" />
+    <link rel="stylesheet" href="./styles/zone-panel.css" />
+    <link rel="stylesheet" href="./styles/system-labels.css" />
+    <link rel="stylesheet" href="./styles/story.css" />
+    <link rel="stylesheet" href="./styles/help.css" />
+    <link rel="stylesheet" href="./styles/music-player.css" />
+    <link rel="stylesheet" href="./styles/system-navigator.css" />
+    <link rel="stylesheet" href="./styles/memory-modal.css" />
+    <link rel="stylesheet" href="./styles/center-modal.css" />
+    <link rel="stylesheet" href="./styles/responsive.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three/three.module.js",
+          "three/addons/": "./vendor/three/addons/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main id="app">
+      <canvas id="universe-canvas"></canvas>
+
+      <section id="intro" class="intro" aria-live="polite">
+        <div id="loader" class="loader" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <span class="loader__star" aria-hidden="true"></span>
+          <span class="loader__track" aria-hidden="true"><span class="loader__fill"></span></span>
+          <span id="loader-label" class="loader__label"></span>
+        </div>
+        <div class="intro__copy">
+          <p class="intro__eyebrow"></p>
+          <h1 id="intro-title"></h1>
+          <p class="intro__subtitle"></p>
+        </div>
+        <div class="intro__actions">
+          <button id="enter-button" class="intro__button" type="button"></button>
+        </div>
+      </section>
+
+      <div id="cinematic-line" class="cinematic-line" aria-hidden="true"></div>
+
+      <section id="music-player" class="music-player" data-i18n-label="music.label">
+        <div class="music-player__bar">
+          <button id="music-toggle" class="music-player__toggle" type="button" data-i18n-label="music.play">
+            <span class="music-player__wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </button>
+          <button
+            id="music-menu-toggle"
+            class="music-player__title"
+            type="button"
+            aria-expanded="false"
+            aria-controls="music-menu"
+            data-i18n-label="music.playlist"
+          >
+            <span id="music-title"></span>
+          </button>
+        </div>
+        <div id="music-menu" class="music-player__menu"></div>
+      </section>
+
+      <div id="story" class="story">
+        <button id="story-toggle" class="story__button" type="button">
+          <span class="story__icon" aria-hidden="true"></span>
+          <span id="story-label"></span>
+          <span id="story-progress" class="story__progress"></span>
+          <span class="story__bar" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <nav id="system-navigator" class="system-navigator" data-i18n-label="nav.label">
+        <button
+          id="system-menu-toggle"
+          class="system-navigator__current"
+          type="button"
+          aria-expanded="false"
+          aria-controls="system-menu"
+        >
+          <span class="system-navigator__dot" aria-hidden="true"></span>
+          <span id="system-title" class="system-navigator__name"></span>
+          <span id="system-progress" class="system-navigator__progress"></span>
+          <span class="system-navigator__chevron" aria-hidden="true"></span>
+        </button>
+        <div id="system-menu" class="system-navigator__menu"></div>
+      </nav>
+
+      <div id="help" class="help">
+        <button
+          id="help-toggle"
+          class="help__button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="help-card"
+          data-i18n-label="help.label"
+        >
+          ?
+        </button>
+        <div id="help-card" class="help__card" role="dialog" aria-labelledby="help-title">
+          <h2 id="help-title" data-i18n="help.title"></h2>
+          <dl id="help-list" class="help__list"></dl>
+        </div>
+      </div>
+
+      <aside id="zone-panel" class="zone-panel" aria-live="polite">
+        <p class="zone-panel__eyebrow" data-i18n="zone.eyebrow"></p>
+        <h2></h2>
+      </aside>
+
+      <section id="memory-modal" class="memory-modal" aria-hidden="true">
+        <div class="memory-modal__backdrop"></div>
+        <button id="memory-close" class="memory-modal__close" type="button" data-i18n-label="modal.close">
+          &times;
+        </button>
+        <button id="memory-prev" class="memory-modal__step memory-modal__step--prev" type="button" data-i18n-label="modal.prev">
+          ‹
+        </button>
+        <button id="memory-next" class="memory-modal__step memory-modal__step--next" type="button" data-i18n-label="modal.next">
+          ›
+        </button>
+        <div
+          class="memory-modal__scene"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="memory-title"
+          tabindex="-1"
+        >
+          <article id="memory-card" class="memory-card">
+            <div class="memory-card__inner">
+              <div class="memory-card__face memory-card__front">
+                <div class="memory-card__photo">
+                  <img id="memory-image" alt="" />
+                  <div id="memory-placeholder" class="memory-card__placeholder">
+                    <span></span>
+                  </div>
+                </div>
+                <h2 id="memory-title" class="memory-card__sr-title"></h2>
+              </div>
+              <div class="memory-card__face memory-card__back">
+                <p id="memory-text"></p>
+              </div>
+            </div>
+          </article>
+          <p class="memory-caption">
+            <span id="memory-position"></span>
+            <span id="memory-details"></span>
+          </p>
+        </div>
+      </section>
+
+      <section id="center-modal" class="center-modal" aria-hidden="true">
+        <div class="center-modal__backdrop"></div>
+        <button id="center-close" class="center-modal__close" type="button" data-i18n-label="modal.close">
+          &times;
+        </button>
+        <article class="center-message" role="dialog" aria-modal="true" aria-labelledby="center-title" tabindex="-1">
+          <p class="center-message__eyebrow" data-i18n="center.eyebrow"></p>
+          <h2 id="center-title"></h2>
+          <p id="center-text"></p>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

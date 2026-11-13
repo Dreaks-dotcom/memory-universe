@@ -1,0 +1,108 @@
+.center-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 42;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 520ms ease,
+    visibility 520ms ease;
+}
+
+.center-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.center-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(9px);
+}
+
+.center-modal__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  color: rgba(248, 243, 234, 0.78);
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+  backdrop-filter: var(--glass-blur);
+}
+
+.center-message {
+  position: relative;
+  z-index: 2;
+  width: min(620px, calc(100vw - 48px));
+  padding: clamp(34px, 7vw, 62px);
+  color: var(--text);
+  text-align: center;
+  outline: none;
+  transform: translateY(18px);
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.center-modal.is-open .center-message {
+  transform: translateY(0);
+}
+
+.center-message::before,
+.center-message::after {
+  position: absolute;
+  left: 50%;
+  width: min(360px, 70%);
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(248, 243, 234, 0.18), transparent);
+  transform: translateX(-50%);
+}
+
+.center-message::before {
+  top: 0;
+}
+
+.center-message::after {
+  bottom: 0;
+}
+
+.center-message__eyebrow {
+  margin: 0 0 18px;
+  color: var(--quiet);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.center-message h2 {
+  margin: 0 0 28px;
+  font-size: clamp(2rem, 5.4vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.center-message p:last-child {
+  margin: 0;
+  color: rgba(248, 243, 234, 0.78);
+  font-size: clamp(1.08rem, 2.4vw, 1.35rem);
+  line-height: 1.85;
+  white-space: pre-line;
+}
+

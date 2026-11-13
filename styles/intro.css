@@ -1,0 +1,251 @@
+/* Intro screen: title at the top, the live universe in the middle, the button at the bottom. */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(9vh, 48px) 24px max(7vh, 36px);
+  background: linear-gradient(
+    180deg,
+    rgba(2, 2, 5, 0.7),
+    transparent 34%,
+    transparent 72%,
+    rgba(2, 2, 5, 0.6)
+  );
+  transition:
+    opacity 1200ms ease,
+    transform 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 1200ms ease;
+}
+
+/* Loading screen: a breathing star and a progress line that fills as photos load
+   (src/ui/loader.js). It fades out once the intro is ready. */
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  width: min(220px, 70vw);
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 700ms ease,
+    visibility 700ms ease;
+}
+
+.intro.is-ready .loader {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader__star {
+  width: 10px;
+  height: 10px;
+  background: #fff6dc;
+  border-radius: 50%;
+  box-shadow:
+    0 0 12px 3px rgba(255, 227, 161, 0.75),
+    0 0 42px 12px rgba(255, 227, 161, 0.25);
+  animation: loader-breathe 2.4s ease-in-out infinite;
+}
+
+.loader__track {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(248, 243, 234, 0.12);
+  border-radius: 2px;
+}
+
+.loader__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--loaded, 0) * 100%);
+  background: rgba(255, 227, 161, 0.85);
+  border-radius: inherit;
+  transition: width 300ms ease;
+}
+
+.loader__label {
+  min-height: 1.2em;
+  color: var(--quiet);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes loader-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.intro.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-24px);
+  pointer-events: none;
+}
+
+.intro__copy {
+  width: min(760px, 100%);
+  text-align: center;
+}
+
+.intro__eyebrow {
+  margin: 0 0 14px;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.intro h1 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(2.3rem, 6.4vw, 4.4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.intro__subtitle {
+  width: min(560px, 100%);
+  margin: 16px auto 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  line-height: 1.55;
+}
+
+.intro__actions {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  width: min(340px, 100%);
+}
+
+/* The enter "button" is just text that grows on hover. */
+.intro__button {
+  padding: 8px 16px;
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 1.15rem;
+  font-weight: 500;
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro__button:hover {
+  transform: scale(1.15);
+}
+
+.intro__button:active {
+  transform: scale(1.05);
+}
+
+.intro__button:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.intro__button[hidden] {
+  display: none;
+}
+
+
+/* Entrance, started once the universe has loaded: the title is "written" left to right. */
+.intro__eyebrow,
+.intro h1,
+.intro__subtitle,
+.intro__actions {
+  opacity: 0;
+}
+
+.intro.is-ready .intro__eyebrow {
+  animation: intro-fade 900ms ease 200ms both;
+}
+
+.intro.is-ready h1 {
+  animation: intro-write 1600ms cubic-bezier(0.45, 0.05, 0.35, 1) 500ms both;
+}
+
+.intro.is-ready .intro__subtitle {
+  animation: intro-fade 900ms ease 1700ms both;
+}
+
+.intro.is-ready .intro__actions {
+  animation: intro-fade 900ms ease 2200ms both;
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes intro-write {
+  from {
+    opacity: 1;
+    clip-path: inset(-20% 100% -20% 0);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(-20% 0 -20% 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .intro {
+    padding-inline: 20px;
+  }
+
+  .intro__actions {
+    width: 100%;
+  }
+}
+
+.cinematic-line {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  color: var(--text);
+  font-size: clamp(1.6rem, 5vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(14px);
+  transition:
+    opacity 900ms ease,
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cinematic-line.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
